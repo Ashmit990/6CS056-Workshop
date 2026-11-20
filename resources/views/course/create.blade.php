@@ -1,135 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Course</title>
-</head>
-<body>
 
-<h1>Create Course</h1>
+<x-layouts.app title="Create Course">
 
-@if($errors->any())
-    <div>
-        <h3>Please fix the following errors:</h3>
+    <h1>Create Course</h1>
 
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+    <form action="{{ route('courses.store') }}" method="POST">
+        @csrf
 
-<form method="POST" action="/courses">
+        <x-courses.form :course="new \App\Models\Course()" />
 
-    @csrf
+        <button type="submit" class="btn">
+            Create Course
+        </button>
 
-    <div>
-        <label for="name">Course Name</label>
+        <a href="{{ route('courses.index') }}">Cancel</a>
+    </form>
 
-        <input
-            type="text"
-            id="name"
-            name="name"
-            value="{{ old('name') }}"
-        >
-    </div>
-
-    <br>
-
-    <div>
-        <label for="description">Description</label>
-
-        <textarea
-            id="description"
-            name="description"
-        >{{ old('description') }}</textarea>
-    </div>
-
-    <br>
-
-    <div>
-        <label for="duration">Duration (weeks)</label>
-
-        <input
-            type="number"
-            id="duration"
-            name="duration"
-            value="{{ old('duration') }}"
-        >
-    </div>
-
-    <br>
-
-    <div>
-        <label for="fee">Fee</label>
-
-        <input
-            type="number"
-            step="0.01"
-            id="fee"
-            name="fee"
-            value="{{ old('fee') }}"
-        >
-    </div>
-
-    <br>
-
-    <div>
-        <label for="difficulty">Difficulty</label>
-
-        <select id="difficulty" name="difficulty">
-
-            <option value="">
-                Select Difficulty
-            </option>
-
-            <option value="Easy"
-                {{ old('difficulty') == 'Easy' ? 'selected' : '' }}>
-                Easy
-            </option>
-
-            <option value="Medium"
-                {{ old('difficulty') == 'Medium' ? 'selected' : '' }}>
-                Medium
-            </option>
-
-            <option value="Hard"
-                {{ old('difficulty') == 'Hard' ? 'selected' : '' }}>
-                Hard
-            </option>
-
-        </select>
-    </div>
-
-    <br>
-
-    <div>
-        <label>
-            <input
-                type="checkbox"
-                name="is_active"
-                value="1"
-                {{ old('is_active', true) ? 'checked' : '' }}
-            >
-
-            Active
-        </label>
-    </div>
-
-    <br>
-
-    <button type="submit">
-        Create Course
-    </button>
-
-</form>
-
-<br>
-
-<a href="/courses">
-    Back to Courses
-</a>
-
-</body>
-</html>
+</x-layouts.app>
 
